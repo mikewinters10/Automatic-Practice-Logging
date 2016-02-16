@@ -23,6 +23,7 @@ for i = 1:size(binary,2)
     end
 end
 
+nonZeroFrames(nonZeroFrames==0)=[];
 % figure;
 % imagesc(gt(abs(processed),thresh))
 % title('Output Vector Binarization (throw away all pauses)')

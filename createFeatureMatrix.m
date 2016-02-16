@@ -1,4 +1,4 @@
-function [sC, pC] = createFeatureMatrix(inputAudio, windowSizeInSec, hopSizeInSec, fs)
+function [sC, pC, nonZeroFrames] = createFeatureMatrix(inputAudio, windowSizeInSec, hopSizeInSec, fs)
 
 % Remove last eight-seconds
 inputAudio = processInputAudio(inputAudio,fs);
