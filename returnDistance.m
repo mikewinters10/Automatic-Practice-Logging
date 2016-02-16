@@ -1,0 +1,1 @@
+function dist = returnDistance(qPC, rPC, qSC, rSC);

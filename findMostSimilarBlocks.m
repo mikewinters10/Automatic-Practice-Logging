@@ -1,7 +1,7 @@
 % This function seeks to find the most similar sub-vectors in a test-vector
 % to a given query. It returns number of Matches.
 
-function matches = findMostSimilarBlocks(queryVec,testVec, numOfBlocksToTest, numberOfMatches)
+function matches = findMostSimilarBlocks(queryVec, testVec, numOfBlocksToTest, numberOfMatches)
 
 matches = ones(2,numberOfMatches);
 lengthTestVec = size(testVec,2);

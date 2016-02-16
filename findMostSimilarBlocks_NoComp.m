@@ -12,6 +12,7 @@ for i=1:(lengthReference-lengthQuery+1)
    similarity = mae(query, reference(:,i:i+lengthQuery-1));
    
    for j=1:numberOfMatches
+       % If this match is greater than the similarity,
        if Matches(2,j) > similarity
            if j<numberOfMatches
               Matches((j+1:end),:) = Matches(j:(end-1),:);
