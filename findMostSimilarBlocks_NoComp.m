@@ -8,7 +8,9 @@ lengthReference = size(reference,2);
 lengthQuery = size(query,2);
 
 for i=1:(lengthReference-lengthQuery+1)
+    
    similarity = mae(query, reference(:,i:i+lengthQuery-1));
+   
    for j=1:numberOfMatches
        if Matches(2,j) > similarity
            if j<numberOfMatches
