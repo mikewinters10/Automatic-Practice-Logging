@@ -12,7 +12,7 @@
 % different features
 %>
 % ======================================================================
-function [Mvt1, Mvt2, Mvt3] = saveRefFeatureMatrices(fs)
+function refStructs = saveRefFeatureMatrices(fs)
 
 % Global winSizes and hopSizes
 winSize = [0.5, 0.65, 0.80, 0.95, 1.1, 1.25];
@@ -61,3 +61,7 @@ save('Mvt2FeatMat', 'Mvt2')
 [Mvt3.sC.sC6, Mvt3.pC.pC6] = createFeatureMatrix(Mvt3.refTrack, Mvt3.winSize(6), Mvt3.hopSize, fs);
 
 save('Mvt3FeatMat', 'Mvt3')
+
+refStruct.Mvt1 = Mvt1;
+refStruct.Mvt2 = Mvt2;
+refStruct.Mvt3 = Mvt3;
