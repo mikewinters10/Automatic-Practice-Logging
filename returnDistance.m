@@ -1,1 +1,3 @@
-function dist = returnDistance(qPC, rPC, qSC, rSC);
+function dist = distanceMapping(qPC, rPC, qSC, rSC);
+
+pCdist = mae(qPC - rPC);

@@ -1,3 +1,17 @@
+% ======================================================================
+% This code written by R. Michael Winters
+% Date created: February 16, 2016
+%
+%> @brief finds the most similar frames for a given query.
+%> called by ::
+%>
+%> @param fs: The sampling rate of everything (assummed to be the same for
+% query and reference
+%>
+%> @retval matches: Mvt1, Mvt2, Mvt3 structs containing structs of the
+% different features
+%>
+% ======================================================================
 function [Mvt1, Mvt2, Mvt3] = saveRefFeatureMatrices(fs)
 
 % Global winSizes and hopSizes
@@ -20,11 +34,11 @@ Mvt3.refTrack = 'Berman_Prokofiev_Op29_Mvt3.mp3';
 % Create PC Matrixes for Reference1
 
 [Mvt1.sC.sC1, Mvt1.pC.pC1] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(1), Mvt1.hopSize, fs);
-[Mvt1.sC.sc2, Mvt1.pC.pC2] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(2), Mvt1.hopSize, fs);
-[Mvt1.sC.sc3, Mvt1.pC.pC3] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(3), Mvt1.hopSize, fs);
-[Mvt1.sC.sc4, Mvt1.pC.pC4] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(4), Mvt1.hopSize, fs);
-[Mvt1.sC.sc5, Mvt1.pC.pC5] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(5), Mvt1.hopSize, fs);
-[Mvt1.sC.sc6, Mvt1.pC.pC6] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(6), Mvt1.hopSize, fs);
+[Mvt1.sC.sC2, Mvt1.pC.pC2] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(2), Mvt1.hopSize, fs);
+[Mvt1.sC.sC3, Mvt1.pC.pC3] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(3), Mvt1.hopSize, fs);
+[Mvt1.sC.sC4, Mvt1.pC.pC4] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(4), Mvt1.hopSize, fs);
+[Mvt1.sC.sC5, Mvt1.pC.pC5] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(5), Mvt1.hopSize, fs);
+[Mvt1.sC.sC6, Mvt1.pC.pC6] = createFeatureMatrix(Mvt1.refTrack, Mvt1.winSize(6), Mvt1.hopSize, fs);
 
 save('Mvt1FeatMat', 'Mvt1')
 

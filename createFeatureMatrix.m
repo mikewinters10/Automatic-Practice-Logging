@@ -1,10 +1,10 @@
-function [sC, pC, nonZeroFrames] = createFeatureMatrix(inputAudio, windowSizeInSec, hopSizeInSec, fs)
+function [sC, pC, nonZeroFrames] = createFeatureMatrix(inputAudio, winSizeInSec, hopSizeInSec, fs)
 
 % Remove last eight-seconds
 inputAudio = processInputAudio(inputAudio,fs);
 
 % Block audio according to desired window and hopSize
-x = blockAudio(inputAudio, windowSizeInSec, hopSizeInSec, fs);
+x = blockAudio(inputAudio, winSizeInSec, hopSizeInSec, fs);
 
 % Use only the blocks for which the sample values exceed the 'threshold,' 'probability' percent of the time.
 threshold = 0.01; % 0.005 is a good value %0.05 is agressive.
