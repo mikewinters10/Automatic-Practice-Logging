@@ -1,0 +1,26 @@
+function [sC, pC, nZF, refname] = createFeatureMatrix(inputAudio, winSizeInSec, hopSizeInSec, fs)
+
+struct.filename = inputAudio;
+struct.winSize = winSizeInSec;
+struct.hopSize
+% Remove last eight-seconds
+inputAudio = processInputAudio(inputAudio,fs);
+
+% Block audio according to desired window and hopSize
+x = blockAudio(inputAudio, winSizeInSec, hopSizeInSec, fs);
+
+% Use only the blocks for which the sample values exceed the 'threshold,' 'probability' percent of the time.
+threshold = 0.01; % 0.005 is a good value %0.05 is agressive.
+probability = 0.5; % Probability of being zero
+[nZF, x] = removePauses(x, threshold, probability);
+
+% Take the magnitude of the fft
+X = abs(fft(x)); 
+
+% Use only the first half
+X = X(1:fs/2,:);
+
+pC = pitchChroma(X,fs);
+sC = spectralCentroid(X,fs);
+
+%savePitchChromaMatrix(pC, fileName)
