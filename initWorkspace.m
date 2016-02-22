@@ -11,3 +11,5 @@
 winSizeInSec = 1;
 hopSizeInSec = 0.5;
 fs = 44100;
+
+load('refStructFeatMat.mat');

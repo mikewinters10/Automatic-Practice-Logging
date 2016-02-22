@@ -30,6 +30,7 @@ numRefTracks = size(refTracks,2);
 
 for i=1:numRefTracks
     trackName = refTracks{i};
+    eval(['refStruct.r' num2str(i) '.filename = trackName;']);
     for j=1:length(winSize)
         eval(['refStruct.r' num2str(i) '.w' num2str(j) ' = createFeatureMatrix(trackName,' num2str(winSize(j)) ', hopSize, fs);']);
     end

@@ -21,6 +21,8 @@ results = zeros(2,lenNZF);
 
 numMatchesToReturn = 5;
 
+numRefTracks = 5;
+
 % Best matches is filled with the 5 best results for each reference track
 bestMatches = zeros( 3 , numMatchesToReturn * length(fieldnames(rStruct)) );
 
