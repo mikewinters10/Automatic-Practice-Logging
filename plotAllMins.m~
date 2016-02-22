@@ -11,7 +11,7 @@
 
 % ======================================================================
 
-function plotAllMins(fullResultsArray,minValVec, qFilename, rFilenames)
+function plotAllMins(fullResultsArray,minValVec, rStruct)
 
 sizeMinValVec = size(minValVec,2);
 
@@ -36,10 +36,10 @@ hold off
 
 % Format the plot
 box on
- 
-legend(h,rFilenames)
+for 
+legend(h,'Mvt1', 'Mvt2', 'Mvt3')
 
 xlabel('Frame')
 ylabel('(Dis) Similarity')
-title(['Best Matches for ' qFilename])
+title('Best Matches for QueryTrack')
 hold off

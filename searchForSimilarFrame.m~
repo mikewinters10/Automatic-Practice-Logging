@@ -34,9 +34,9 @@ qSC = qStruct.sC(:,frameToTest);
 for k=1:numVersions
     
     % save the desired reference pitchChroma and extractits length.
-    eval(['rPC = rStruct.w' num2str(k) '.pC;']);
+    eval(['rPC = rStruct.pC.pC' num2str(k) ';']);
     lenRPC = length(rPC);
-    eval(['rSC = rStruct.w' num2str(k) '.sC;']);
+    eval(['rSC = rStruct.sC.sC' num2str(k) ';']);
     lenRPC = length(rSC);
     
     % Calculate the Euclidean Distance
@@ -51,7 +51,7 @@ for k=1:numVersions
     [val, idx] = sort(minimums);
     places = ((k-1)*numResults+1):k*numResults;
     bestResults(:,places) = ...
-        [ rStruct.winSizes(k)*ones(1,numResults); ...
+        [ rStruct.winSize(k)*ones(1,numResults); ...
           locs(idx(1:numResults));               ...
           val(1:numResults)];
 end
