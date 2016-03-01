@@ -9,10 +9,10 @@
 % ======================================================================
 
 winSizeInSec = 1;
-hopSizeInSec = 0.5;
+hopSizeInSec = 0.25;
 fs = 44100;
-inputAudio = '140602-000.mp3';
-
-q = createFeatureMatrix(inputAudio, winSizeInSec, hopSizeInSec, fs);
+inputAudio = '3-140602-000.mp3';
+% 
+% q = createFeatureMatrix(inputAudio, winSizeInSec, hopSizeInSec, fs);
 
 load('refStructFeatMat.mat');

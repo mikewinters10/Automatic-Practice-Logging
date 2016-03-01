@@ -56,7 +56,7 @@ qFilename = qStruct.filename;
 rFilenames = rStruct.filenames;
 
 % Plot all of the values
-plotAllMins(results(2,:),[refTrackMins; locs; mins], qFilename, rFilenames);
+plotAllMins(results,[refTrackMins; locs; mins], qFilename, rFilenames);
 
 
 

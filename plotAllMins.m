@@ -11,12 +11,15 @@
 
 % ======================================================================
 
-function plotAllMins(fullResultsArray,minValVec, qFilename, rFilenames)
+function plotAllMins(results,minValVec, qFilename, rFilenames)
+
+
+resultsMins = results(2,:);
 
 sizeMinValVec = size(minValVec,2);
 
 figure;
-plot(fullResultsArray)
+plot(resultsMins)
 hold on
 
 mkrSize = 10;
@@ -36,7 +39,15 @@ hold off
 
 % Format the plot
 box on
- 
+
+% Count all of the minima in each example
+[a, b]=hist(results(1,:), unique(results(1,:)));
+
+% Prepend these results to the rFilenames to add to the legend
+for i = 1:size(rFilenames,2)
+    rFilenames{i} = [num2str(a(i)) ' ' rFilenames{i}];
+end
+
 legend(h,rFilenames)
 
 xlabel('Frame')

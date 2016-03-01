@@ -18,8 +18,11 @@ function [frames] = blockAudio(audio, wSize_in_sec, hop_in_sec, fs)
 % initializations
 wSize = ceil(wSize_in_sec*fs);
 hop = ceil(hop_in_sec*fs);
+% wSize = ceil(wSize_in_sec);
+% hop = ceil(hop_in_sec);
 
-% zeropadding in the beginning
+
+% zeropadding in the beginning and end
 zeropadaudio = [zeros(ceil(wSize/2),1);audio;zeros(ceil(wSize/2),1)];
 N = length(zeropadaudio); %length of audio file
 
@@ -32,6 +35,4 @@ frames = zeros(wSize,numWindows);
 for i = 1:numWindows
     frames(1:min(idx+wSize,N)-idx,i) = zeropadaudio(idx:min(idx+wSize,N)-1);
     idx = idx + hop;
-end
-
 end

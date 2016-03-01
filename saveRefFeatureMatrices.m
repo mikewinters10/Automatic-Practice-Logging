@@ -15,7 +15,7 @@
 function refStruct = saveRefFeatureMatrices(fs)
 
 % Global winSizes and hopSizes
-winSize = [0.5, 0.75, 1.0, 1.25];
+winSize = [0.5, 1.0, 1.5, 2.0, 2.5];
 hopSize = 0.25;
 
 % Declare the reference tracks
