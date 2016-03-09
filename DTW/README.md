@@ -1,15 +1,15 @@
 # DTW Library
 
 Requirements:
-CMake
-Supported C++ compiler (Xcode, VC++, etc)
+- CMake
+- Supported C++ compiler (Xcode, VC++, etc)
 
 Instructions:
-Run CMake
-Browse to project directory
-Set Build directory
-Configure, until none of the entries are red
-Generate
+- Run CMake
+- Browse to project directory
+- Set Build directory
+- Configure, until none of the entries are red
+- Generate
 
 Usage:
 - Build the executable in release mode
