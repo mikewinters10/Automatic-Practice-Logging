@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 
 	for (int i = 0; i < row; i++)
 	{
-		infile.seekg((start_idx+i*(col+1))*sizeof(float));
+		infile.seekg((start_idx+i*(col+start_idx))*sizeof(float));
 		infile.read(reinterpret_cast<char*>(&DistMat[i][0]), sizeof(float)*col);
 	}
 
