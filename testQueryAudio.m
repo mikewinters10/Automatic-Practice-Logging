@@ -10,9 +10,15 @@
 
 filenames = dir('queryAudio/*.mp3');
 
+
 numFilenames = size(filenames,1);
 
 for i = 1:numFilenames
-    q = createFeatureMatrix(filenames(i).name,winSizeInSec,0.25,fs);
+    tic
+    filename = filenames(i).name
+    %filename = '1-140507-022.mp3';
+    q = createFeatureMatrix(filename);
     searchAllNonZeroFrames(q,refStruct)
+    toc
 end
+

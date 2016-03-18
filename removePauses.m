@@ -1,6 +1,6 @@
 % Use only the input vectors for which the the threshold exceed the probability
 
-function [nonZeroFrames, processed] = removePauses(x, thresh, probability)
+function [nonZeroFrames, zeroFrames, processed] = removePauses(x, thresh, probability)
 
 % Binarize the matrix 
 binary = gt(abs(x),thresh);
@@ -23,7 +23,10 @@ for i = 1:size(binary,2)
     end
 end
 
-% Remove them.
+% Also supply the zeroFrames to the user.
+zeroFrames = find(nonZeroFrames==0);
+
+% Now remove them.
 nonZeroFrames(nonZeroFrames==0)=[];
 
 % figure;

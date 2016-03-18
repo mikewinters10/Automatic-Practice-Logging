@@ -30,8 +30,6 @@ end
 if length(inputAudio)<(fs*4)
     'Audio file is too short for analysis'
     return
-else
-    inputAudio = inputAudio(1:(end-fs*8));
 end
 
 outputVector = inputAudio;

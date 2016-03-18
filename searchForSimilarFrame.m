@@ -18,41 +18,56 @@
 function matches = searchForSimilarFrame(qStruct, frameToTest, rStruct, numMatchesToReturn)
 
 % Number of versions we will search:
-numVersions = length(rStruct.winSizes);
+%numVersions = length(rStruct.winSizes);
+winSizesToSearch = rStruct.winSizes;
+numWins = length(winSizesToSearch);
 
 % A number of minimums to return for each version independently (internal)
 numResults = 10;
 
 % An internal best results array
-bestResults = zeros(3,numResults*numVersions);
+bestResults = zeros(3,numResults * numWins);
 
-% Take the desired frame to test from the struct
-qPC = qStruct.pC(:,frameToTest);
-qSC = qStruct.sC(:,frameToTest);
+% Get the query frames to average together.
+% numFramesToAvg = 2 * qWinSize - 1;
+% startFrame = frameToTest * 8;
+% qPCFrames = qStruct.pC(:, startFrame:(startFrame + numFramesToAvg - 1));
+
+[startFrame, endFrame, numFrames] = computeStartEndFrame(frameToTest, qStruct.bigHopSize, qStruct.bigWinSize);
+
+
+if endFrame <= size(qStruct.pC, 2)
+    qPCFrames = qStruct.pC(:, startFrame : endFrame);
+    qPC = sum(qPCFrames, 2) / numFrames;
+else
+    qPC = zeros(12,1);
+end
+
+% 
+% if endFrame <= size(qStruct.pC, 2)
+%     qPCFrames = qStruct.pC(:, startFrame : endFrame);
+%     qPC = sum(qPCFrames, 2) / numFrames;
+% else
+%     qPC = zeros(12,1);
+% end
 
 % For all of the iterations of pC (e.g. pC1, pC2)
-for k=1:numVersions
-    
-    % save the desired reference pitchChroma and extractits length.
+for k=1:numWins
+
+    % Load the referencePC for this winSize
     eval(['rPC = rStruct.w' num2str(k) '.pC;']);
-    lenRPC = length(rPC);
-    eval(['rSC = rStruct.w' num2str(k) '.sC;']);
-    lenRPC = length(rSC);
     
     % Calculate the Euclidean Distance
     distance = pdist2(qPC', rPC'); 
     
-    % Find local minimum
-    invDist = max(distance) - distance; 
-    [pks, locs] = findpeaks(invDist);
-    minimums = max(distance) - pks; 
-    
     % Keep only the best numResults
-    [val, idx] = sort(minimums);
+    [val, idx] = sort(distance);
+    
+    % numResults per window Size. Put them into a vector.
     places = ((k-1)*numResults+1):k*numResults;
-    bestResults(:,places) = ...
-        [ rStruct.winSizes(k)*ones(1,numResults); ...
-          locs(idx(1:numResults));               ...
+    bestResults(:,places) =                             ...
+        [ rStruct.winSizes(k) * ones(1, numResults);       ...
+          rStruct.nZF(idx(1:numResults));               ...
           val(1:numResults)];
 end
     

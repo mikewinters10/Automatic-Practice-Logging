@@ -1,3 +1,4 @@
+
 % This function is originally from Ashis Pati and used for our purposes, 12/05/2015 
 % Reason: Algorithmic prototyping. Will be implemented if algorithm works better.
 %% Windowing Function
@@ -13,11 +14,11 @@
 % OUTPUTS
 % frames: wSize x n matrix of frames, n being the number of windows
 
-function [frames] = blockAudio(audio, wSize_in_sec, hop_in_sec, fs)
+function [frames] = blockAudio(audio, wSize, hop)
 
 % initializations
-wSize = ceil(wSize_in_sec*fs);
-hop = ceil(hop_in_sec*fs);
+%wSize = ceil(wSize_in_sec*fs);
+%hop = ceil(hop_in_sec*fs);
 % wSize = ceil(wSize_in_sec);
 % hop = ceil(hop_in_sec);
 

@@ -11,46 +11,67 @@
 
 % ======================================================================
 
-function plotAllMins(results,minValVec, qFilename, rFilenames)
+function plotAllMins(results, minValVec, qFilename, rFilenames, q, numResultsToReturn)
 
 
-resultsMins = results(2,:);
+resultsMins = results(3,:);
 
-sizeMinValVec = size(minValVec,2);
+%sizeMinValVec = size(minValVec,2);
 
-figure;
-plot(resultsMins)
+figure
+plot(resultsMins);
 hold on
-
 mkrSize = 10;
 mkrWidth = 1.6;
 % Make a handle for each reference track
 h = zeros(3,1);
-for i = 1:sizeMinValVec
-    if minValVec(1,i) == 1
-        h(1) = plot(minValVec(2,i), minValVec(3,i), 'r+','MarkerSize',mkrSize, 'LineWidth', mkrWidth);
-    elseif minValVec(1,i) == 2
-        h(2) = plot(minValVec(2,i), minValVec(3,i), 'go','MarkerSize',mkrSize, 'LineWidth', mkrWidth);
-    elseif minValVec(1,i) == 3
-        h(3) = plot(minValVec(2,i), minValVec(3,i), 'm*','MarkerSize',mkrSize, 'LineWidth', mkrWidth);
+
+% Do it for all results now
+for i = 1:length(results(3,:));
+    if results(1,i) == 1
+        h(1) = plot(i, results(3,i), 'r+','MarkerSize',mkrSize, 'LineWidth', mkrWidth);
+    elseif results(1,i) == 2
+        h(2) = plot(i, results(3,i), 'go','MarkerSize',mkrSize, 'LineWidth', mkrWidth);
+    elseif results(1,i) == 3
+        h(3) = plot(i, results(3,i), 'm*','MarkerSize',mkrSize, 'LineWidth', mkrWidth);
     end
 end
+
+% Count all of the minima in each example
+[a, b] = hist(results(1,:), unique(results(1,:)));
+
+% For dealing with cases that there is 0 matches
+if size(1,2) <  length(rFilenames)
+    c = zeros(1,length(rFilenames));
+    c(b) = a;
+    for i = find(c==0)
+        if i == 1
+            h(1) = plot(i, results(3,i),'r+','MarkerSize',mkrSize, 'LineWidth', mkrWidth,'Visible','off');
+        elseif i == 2
+            h(2) = plot(i, results(3,i),'go','MarkerSize',mkrSize, 'LineWidth', mkrWidth,'Visible','off');
+        elseif i == 3
+            h(3) = plot(i, results(3,i),'m*','MarkerSize',mkrSize, 'LineWidth', mkrWidth, 'Visible','off');
+        end
+    end
+end
+
+
 hold off
 
 % Format the plot
 box on
 
-% Count all of the minima in each example
-[a, b]=hist(results(1,:), unique(results(1,:)));
-
 % Prepend these results to the rFilenames to add to the legend
 for i = 1:size(rFilenames,2)
-    rFilenames{i} = [num2str(a(i)) ' ' rFilenames{i}];
+    rFilenames{i} = [num2str(c(i)) ' ' rFilenames{i}];
 end
 
-legend(h,rFilenames)
+a = legend(h,rFilenames);
 
-xlabel('Frame')
+xlabel('Non-Zero Frame')
 ylabel('(Dis) Similarity')
-title(['Best Matches for ' qFilename])
+title(['Best Matches for ' qFilename ' (Thresh = ' num2str(q.threshold) ', numDTW = ' num2str(numResultsToReturn*3) ')'])
 hold off
+
+htitle = ['Figures/numDTW_' num2str(numResultsToReturn*3) '.eps'];
+saveas(gcf, htitle,'epsc');
