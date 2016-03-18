@@ -3,6 +3,8 @@ function results = genConfMat(dateStr, r)
 
 tic
 
+['Reading ' dateStr '...']
+
 % Generate internal variables;
 bigHopSize = r.r1.bigHopSize;
 bigWinSize = r.r1.bigWinSize;
@@ -39,7 +41,7 @@ for i = 1:size(cellMatch,1)
     q = createFeatureMatrix(cellMatch{i,1}, bigHopSize, bigWinSize, removeSilence);
     q.results = searchAllNonZeroFrames(q,r);
     q.annotation = cellMatch{i,2};
-    eval(['results.q' num2str(i) '=q'])
+    eval(['results.q' num2str(i) '=q;'])
     
     % Put the results in their own separate place for later
     %eval(['annotation = results.q' num2str(i) '.annotation;']);
