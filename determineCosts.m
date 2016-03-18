@@ -34,7 +34,10 @@ for k = 1:length(costs);
     refTrackIdx = ceil(k / numMatchesToReturn); 
     eval(['subDistMat = distMats.r' num2str(refTrackIdx) '(qStart : qEnd, rStart : rEnd);']);
 
-    % Return your 
-    costPath = DTW_Cpp(subDistMat);
-    costs(k) = costPath / (2 * bestMatches(1, k) - 1); 
+    % Return your cost and pathLength
+    [cost, pathLength] = DTW_Cpp(subDistMat);
+    
+    % We devide cost by the pathlength, and apply a scaling factor of
+    % pathLength/winSize, canceling out the pathLength.
+    costs(k) = cost / (2 * bestMatches(1, k) - 1); 
 end

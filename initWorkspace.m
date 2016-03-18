@@ -8,9 +8,13 @@
 %> @retval
 % ======================================================================
 
-inputAudio = '1-140507-023.mp3';
+inputAudio = '140502-037.mp3';
+
+%inputAudio = '1-140507-038.mp3'
 % 
-winSizesToSearch = [8, 10, 12, 14, 16, 18];
+%winSizesToSearch = [16, 20, 22, 24, 26, 28];
+winSizesToSearch = [8, 12, 14, 16, 18, 20];
+%winSizesToSearch = [6, 8, 10, 11, 12, 13];
 % winSizesToSearch = [6, 8, 10, 12, 14, 16];
 bigWinSize = 16; % * winSize
 bigHopSize = 4; % * winSize

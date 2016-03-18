@@ -13,6 +13,13 @@
 % ======================================================================
 function results = searchAllNonZeroFrames(qStruct, rStruct)
 
+% Do an error check. They should have the same bigWinSize and bigHopSize;
+if qStruct.bigWinSize ~= rStruct.r1.bigWinSize
+    error('BigWinSize is not the same between query and reference')
+elseif qStruct.bigHopSize ~= rStruct.r1.bigHopSize
+    error('BigWinSize is not the same between query and reference')
+end
+    
 % Save the number of nonZeroFrames to search over
 lenNZF = length(qStruct.nZF);
 
@@ -32,7 +39,6 @@ distMats = createDistMats(qStruct,rStruct);
 
 for i = 1:lenNZF
     
-    i
 %     [startFrame, endFrame, numFrames] = computeStartEndFrame(qStruct.nZF(i), qStruct.bigHopSize, qStruct.bigWinSize);
 % 
 %     % Because we zero-padded when we calculated nZF, there is a
@@ -75,18 +81,18 @@ for i = 1:lenNZF
     
 end
 
-% What are dthe minima of the results?
-[mins, locs] = findMinima(results(3,:));
-
-% Recover the index of the reference track.
-refTrackMins = results(1,locs);
-
-% Get the q and r filenames
-qFilename = qStruct.filename;
-rFilenames = rStruct.filenames;
+% % What are dthe minima of the results?
+% [mins, locs] = findMinima(results(3,:));
+% 
+% % Recover the index of the reference track.
+% refTrackMins = results(1,locs);
+% 
+% % Get the q and r filenames
+% qFilename = qStruct.filename;
+% rFilenames = rStruct.filenames;
 
 % Plot all of the values
-plotAllMins(results, [refTrackMins; locs; mins], qFilename, rFilenames, qStruct, numMatchesToReturn);
+plotAllMins(results, qStruct, rStruct, numMatchesToReturn)
 
 
 

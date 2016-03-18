@@ -33,7 +33,7 @@ if removeSilence == true
     inputAudio = [zeros( ceil( winSizeNZF / 2 ) , 1) ; inputAudio ; zeros( ceil( winSizeNZF / 2 ) , 1 )];
 
     % Use only the blocks for which the sample values exceed the 'threshold,' 'probability' percent of the time.
-    threshold = 0.025; % 0.005 is a good value %0.05 is agressive.
+    threshold = 0.02; % 0.005 is a good value %0.05 is agressive.
     probability = 0.5; % Probability threshold for number of zeros after thresholding per window
     [struct.nZF, struct.zF, ~] = removePauses(xNZF, threshold, probability);
     
@@ -64,7 +64,8 @@ x = blockAudio(inputAudio, winSize, hopSize);
 Y = abs(spectrogram(inputAudio, winSize, winSize/2));
 
 struct.pC = pitchChroma(Y,fs);
+struct.sC = spectralCentroid(Y,fs);
 
-%struct.sC = spectralCentroid(Y,fs);
+struct.pC = [struct.pC];
 
 %savePitchChromaMatrix(pC, fileName)

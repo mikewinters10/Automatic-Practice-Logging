@@ -11,8 +11,10 @@
 
 % ======================================================================
 
-function plotAllMins(results, minValVec, qFilename, rFilenames, q, numResultsToReturn)
+function plotAllMins(results, q, r, numResultsToReturn)
 
+qFilename = q.filename;
+rFilenames = {'Op.29, Mvt.1', 'Op.29, Mvt.2', 'Op.29, Mvt.3'};
 
 resultsMins = results(3,:);
 
