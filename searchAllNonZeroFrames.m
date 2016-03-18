@@ -91,8 +91,11 @@ end
 % qFilename = qStruct.filename;
 % rFilenames = rStruct.filenames;
 
-% Plot all of the values
-plotAllMins(results, qStruct, rStruct, numMatchesToReturn)
+% It is possible that there will be no results (i.e. no NonZeroFrames)
+if ~isempty(results)
+    % Plot all of the values
+    plotAllMins(results, qStruct, rStruct, numMatchesToReturn)
+end
 
 
 

@@ -3,7 +3,7 @@ function results = genConfMat(dateStr, r)
 
 tic
 
-['Reading ' dateStr '...']
+disp(['Reading ' dateStr '...'])
 
 % Generate internal variables;
 bigHopSize = r.r1.bigHopSize;
@@ -28,8 +28,9 @@ for i = 1:size(a.Filename,1)
     end
 end
 
-%bigWinSize = 16; % * winSize
-%bigHopSize = 4; % * winSize
+disp([num2str(size(cellMatch,1)) ' tracks to search.'])
+
+% This is the switch telling createFeatureMatrix to ignore all 'Zero Frames'
 removeSilence = true;
 
 % Initialize Results
@@ -40,7 +41,7 @@ results.r3 = [];
 for i = 1:size(cellMatch,1)
     q = createFeatureMatrix(cellMatch{i,1}, bigHopSize, bigWinSize, removeSilence);
     
-    disp(['Searching ' cellMatch{i,1} ': ' num2str(length(q.nZF)) ' frames.'])
+    disp(['Searching ' cellMatch{i,1} ': ' num2str(length(q.nZF)) ' frames (' cellMatch{i,2} ').'])
     q.results = searchAllNonZeroFrames(q,r);
     q.annotation = cellMatch{i,2}; % Print to command window
     eval(['results.q' num2str(i) '= q;'])
