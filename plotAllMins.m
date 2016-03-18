@@ -41,9 +41,11 @@ end
 
 % Count all of the minima in each example
 [a, b] = hist(results(1,:), unique(results(1,:)));
+c = zeros(1,length(rFilenames));
+c(b) = a;
 
 % For dealing with cases that there is 0 matches
-if size(1,2) <  length(rFilenames)
+if size(a,2) <  length(rFilenames)
     c = zeros(1,length(rFilenames));
     c(b) = a;
     for i = find(c==0)
