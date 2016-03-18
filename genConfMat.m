@@ -39,9 +39,11 @@ results.r3 = [];
 
 for i = 1:size(cellMatch,1)
     q = createFeatureMatrix(cellMatch{i,1}, bigHopSize, bigWinSize, removeSilence);
+    
+    disp(['Searching ' cellMatch{i,1} ': ' num2str(length(q.nZF)) ' frames.'])
     q.results = searchAllNonZeroFrames(q,r);
-    q.annotation = cellMatch{i,2};
-    eval(['results.q' num2str(i) '=q;'])
+    q.annotation = cellMatch{i,2}; % Print to command window
+    eval(['results.q' num2str(i) '= q;'])
     
     % Put the results in their own separate place for later
     %eval(['annotation = results.q' num2str(i) '.annotation;']);

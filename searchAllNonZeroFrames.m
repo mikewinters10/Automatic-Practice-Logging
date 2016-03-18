@@ -27,7 +27,7 @@ lenNZF = length(qStruct.nZF);
 results = zeros(3,lenNZF);
 
 % The number of matches to return for each reference track
-numMatchesToReturn = 10;
+numMatchesToReturn = 15;
 
 numRefTracks = size(rStruct.filenames,2);
 
