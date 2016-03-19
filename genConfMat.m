@@ -28,10 +28,12 @@ for i = 1:size(a.Filename,1)
     end
 end
 
-disp([num2str(size(cellMatch,1)) ' tracks to search.'])
+% if ~isempty(cellMatch)
+%     disp([num2str(size(cellMatch,1)) ' tracks to search.'])
+% else
+%     disp([num2str(size(cellMatch,0)) ' tracks to search.'])
+% end
 
-% Save the reference matrix
-results.refStruct = r;
 
 % This is the switch telling createFeatureMatrix to ignore all 'Zero Frames'
 removeSilence = true;
@@ -41,7 +43,7 @@ results.r1 = [];
 results.r2 = [];
 results.r3 = [];
 
-for i = 1:size(cellMatch,1)
+for i = 4:size(cellMatch,1)
     q = createFeatureMatrix(cellMatch{i,1}, bigHopSize, bigWinSize, removeSilence);
     
     disp(['Searching ' cellMatch{i,1} ': ' num2str(length(q.nZF)) ' frames (' cellMatch{i,2} ').'])
@@ -60,11 +62,14 @@ for i = 1:size(cellMatch,1)
     end
     
     % Create a new variable with the string
-    eval(['r_' dateStr '=results;'])
+    eval(['r_' dateStr '= results;'])
 
     % Save it
     save(['Results/' dateStr '.mat'], ['r_' dateStr])
 end
+
+% Save the reference matrix
+results.refStruct = r;
 
 % for i = 1:size(cellMatch,1)
 % 
