@@ -30,6 +30,9 @@ end
 
 disp([num2str(size(cellMatch,1)) ' tracks to search.'])
 
+% Save the reference matrix
+results.refStruct = r;
+
 % This is the switch telling createFeatureMatrix to ignore all 'Zero Frames'
 removeSilence = true;
 
@@ -55,6 +58,12 @@ for i = 1:size(cellMatch,1)
     elseif  strcmp(q.annotation, 'Op. 29, Mvt. 3')
         eval(['results.r3 = [results.r3 results.q' num2str(i) '.results(1,:)];']);
     end
+    
+    % Create a new variable with the string
+    eval(['r_' dateStr '=results;'])
+
+    % Save it
+    save(['Results/' dateStr '.mat'], ['r_' dateStr])
 end
 
 % for i = 1:size(cellMatch,1)
@@ -93,9 +102,6 @@ end
 
 % Add the confusion matrix to the results;
 results.confusionMat = confusionMat;
-
-% Save the reference matrix
-results.refStruct = r;
 
 % Create a new variable with the string
 eval(['r_' dateStr '=results;'])
