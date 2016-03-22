@@ -11,7 +11,7 @@
 
 % ======================================================================
 
-function plotAllMins(results, q, r, numResultsToReturn)
+function plotAllMins(results, q, numResultsToReturn)
 
 qFilename = q.filename;
 rFilenames = {'Op.29, Mvt.1', 'Op.29, Mvt.2', 'Op.29, Mvt.3'};
@@ -74,8 +74,12 @@ a = legend(h,rFilenames);
 
 xlabel('Non-Zero Frame')
 ylabel('(Dis) Similarity')
-title(['Best Matches for ' qFilename ' (Thresh = ' num2str(q.threshold) ', numDTW = ' num2str(numResultsToReturn*3) ')'])
+if isfield(q,'annotation')
+    title(['Best Matches for ' qFilename ' ("' q.annotation '," Thresh = ' num2str(q.threshold) ', numDTW = ' num2str(numResultsToReturn*3) ')'])
+else
+    title(['Best Matches for ' qFilename ' (Thresh = ' num2str(q.threshold) ', numDTW = ' num2str(numResultsToReturn*3) ')'])
+end
 hold off
 
 htitle = ['Figures/numDTW_' num2str(numResultsToReturn*3) '.eps'];
-saveas(gcf, htitle,'epsc');
+%saveas(gcf, htitle,'epsc');

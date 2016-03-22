@@ -94,7 +94,7 @@ end
 % It is possible that there will be no results (i.e. no NonZeroFrames)
 if ~isempty(results) && size(results,2) > 5
     % Plot all of the values
-    plotAllMins(results, qStruct, rStruct, numMatchesToReturn)
+    plotAllMins(results, qStruct, numMatchesToReturn)
 end
 
 
