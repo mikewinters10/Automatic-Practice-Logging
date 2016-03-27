@@ -1,0 +1,10 @@
+/Users/mikewinters/Desktop/build/CMakeFiles/RUN_TESTS.dir
+/Users/mikewinters/Desktop/build/CMakeFiles/ALL_BUILD.dir
+/Users/mikewinters/Desktop/build/CMakeFiles/ZERO_CHECK.dir
+/Users/mikewinters/Desktop/build/MUSI8903Exec/CMakeFiles/RUN_TESTS.dir
+/Users/mikewinters/Desktop/build/MUSI8903Exec/CMakeFiles/MUSI8903Exec.dir
+/Users/mikewinters/Desktop/build/Dtw/CMakeFiles/Dtw.dir
+/Users/mikewinters/Desktop/build/Dtw/CMakeFiles/RUN_TESTS.dir
+/Users/mikewinters/Desktop/build/TestExec/CMakeFiles/UnitTest++.dir
+/Users/mikewinters/Desktop/build/TestExec/CMakeFiles/RUN_TESTS.dir
+/Users/mikewinters/Desktop/build/TestExec/CMakeFiles/TestExec.dir
