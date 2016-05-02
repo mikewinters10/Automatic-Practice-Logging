@@ -8,7 +8,7 @@
 %> @retval
 % ======================================================================
 
-inputAudio = '140521-013.mp3';
+inputAudio = '140521-032.mp3';
 
 %inputAudio = '1-140507-038.mp3'
 % 
@@ -32,6 +32,6 @@ fs = 44100;
 removeSilence = true;
 
 % Create the feature matrix
-q = createFeatureMatrix(inputAudio, bigHopSize, bigWinSize, removeSilence)
+q = createFeatureMatrix(inputAudio, bigHopSize, bigWinSize, removeSilence);
 
 r = saveRefFeatureMatrices(bigHopSize, bigWinSize, winSizesToSearch)

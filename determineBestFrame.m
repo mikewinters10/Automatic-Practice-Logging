@@ -1,5 +1,5 @@
 % ======================================================================
-% This code written by R. Michael Winters & Siddharth Jumar
+% This code written by R. Michael Winters & Siddharth Kumar
 % Date created: March 13, 2016
 %
 %> @brief creates distance mats for all reference tracks vs. the query track

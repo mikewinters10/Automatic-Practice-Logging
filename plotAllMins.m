@@ -16,7 +16,7 @@ function plotAllMins(results, q, numResultsToReturn)
 qFilename = q.filename;
 rFilenames = {'Op.29, Mvt.1', 'Op.29, Mvt.2', 'Op.29, Mvt.3'};
 
-resultsMins = results(3,:);
+resultsMins = results(2,:);
 
 %sizeMinValVec = size(minValVec,2);
 
@@ -74,6 +74,8 @@ a = legend(h,rFilenames);
 
 xlabel('Non-Zero Frame')
 ylabel('(Dis) Similarity')
+
+% If there is an annotation, put it in the title.
 if isfield(q,'annotation')
     title(['Best Matches for ' qFilename ' ("' q.annotation '," Thresh = ' num2str(q.threshold) ', numDTW = ' num2str(numResultsToReturn*3) ')'])
 else
@@ -81,5 +83,6 @@ else
 end
 hold off
 
-htitle = ['Figures/numDTW_' num2str(numResultsToReturn*3) '.eps'];
-%saveas(gcf, htitle,'epsc');
+[~, fname] = fileparts(qFilename)
+htitle = ['Figures/' fname '.eps'];
+saveas(gcf, htitle,'epsc');

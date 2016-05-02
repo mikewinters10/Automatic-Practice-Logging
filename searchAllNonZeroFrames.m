@@ -127,7 +127,9 @@ for i = 1:lenNZF
     end
 end
 
-% Make it so that all of the elements between have points that exist
+% Ask points that do not match the rest of the consecutive segments to
+% please switch to the majority vote track (and also somewhere near the
+% median frame)
 discont = SplitVec(qStruct.nZF,'consecutive');
 newResults = results;
 for i=1:length(discont)

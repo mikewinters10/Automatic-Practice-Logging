@@ -12,20 +12,21 @@
 %> @retval costs = An array of costs
 % ======================================================================
 
-function  costs = determineCosts(bestMatches, qFrame, distMats, bigHopSize, bigWinSize, numMatchesToReturn)
+function  costs = determineCosts(bestMatches, qFrame, distMats, bigHopSize, bigWinSize, numMatchesToReturn, numHops)
 
 % Run a DTW for these bestMatches
 costs = zeros(1,size(bestMatches,2));
 
+nonZeroIndx = find(bestMatches(1,:)>0);
 % Search the top matches and return their data.
-for k = 1:length(costs);
+for k = nonZeroIndx;
     
     % Need the qStart, rStart, rWinSize
-    [qStart, qEnd, ~] = computeStartEndFrame(qFrame, bigHopSize, bigWinSize); 
+    [qStart, qEnd, ~] = computeStartEndFrame(qFrame, bigHopSize, bigWinSize+(numHops*bigHopSize)); 
 %     qWinSize = bigWinSize;
 %     qEnd = (2 * qWinSize - 1) + qStart;
     
-    [rStart, rEnd, ~] = computeStartEndFrame(bestMatches(2, k), bigHopSize, bestMatches(1, k));
+    [rStart, rEnd, ~] = computeStartEndFrame(bestMatches(2, k), bigHopSize, bestMatches(1, k)+(numHops*bigHopSize));
 %     rStart = (bestMatches(2, k) - 1) * 2 * bigHopSize + 1;
 %     rWinSize = bestMatches(1, k);
 %     rEnd = (2 * rWinSize - 1) + rStart;
