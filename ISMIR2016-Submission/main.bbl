@@ -1,0 +1,70 @@
+\begin{thebibliography}{10}
+
+\bibitem{Müller2007}
+{\em Information Retrieval for Music and Motion}, chapter Dynamic Time Warping,
+  pages 69--84.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2007.
+
+\bibitem{bartsch2001catch}
+Mark~A Bartsch and Gregory~H Wakefield.
+\newblock To catch a chorus: Using chroma-based representations for audio
+  thumbnailing.
+\newblock In {\em Applications of Signal Processing to Audio and Acoustics,
+  2001 IEEE Workshop on the}, pages 15--18. IEEE, 2001.
+
+\bibitem{bertin2011large}
+Thierry Bertin-Mahieux and Daniel P.~W. Ellis.
+\newblock Large-scale cover song recognition using hashed chroma landmarks.
+\newblock In {\em Proceedings of the IEEE Workshop on Applications of Signal
+  Processing to Audio and Acoustics}, pages 117--20, 2011.
+
+\bibitem{Ellis2007Cover}
+D.~P.~W. Ellis and G.~E. Poliner.
+\newblock Identifying `cover songs' with chroma features and dynamic
+  programming beat tracking.
+\newblock In {\em Acoustics, Speech and Signal Processing, 2007. ICASSP 2007.
+  IEEE International Conference on}, volume~4, pages IV--1429--IV--1432, 2007.
+
+\bibitem{GuoISMIR:2004}
+AnYuan Guo and Hava Siegelmann.
+\newblock Time-warped longest common subsequence algorithm for music retrieval.
+\newblock In {\em Proceedings of the 5th International Conference on Music
+  Information Retrieval}, pages 258--61, 2004.
+
+\bibitem{hu2003polyphonic}
+Ning Hu, Roger~B. Dannenberg, and George Tzanetakis.
+\newblock Polyphonic audio matching and alignment for music retrieval.
+\newblock In {\em Proceedings of the IEEE Workshop on Applications of Signal
+  Processing to Audio and Acoustics}, pages 185--8, 2003.
+
+\bibitem{klapuri2004automatic}
+Anssi~P Klapuri.
+\newblock Automatic music transcription as we know it today.
+\newblock {\em Journal of New Music Research}, 33(3):269--282, 2004.
+
+\bibitem{raphael2002automatic}
+C~RAPHAEL.
+\newblock Automatic transcription of piano music.
+\newblock In {\em Proc. International Conference on Music Information Retrieval
+  (ISMIR2002)}, 2002.
+
+\bibitem{ravuri2010cover}
+Suman Ravuri and Daniel P.~W. Ellis.
+\newblock Cover song detection: from high scores to general classification.
+\newblock In {\em Proceedings of the IEEE International Converence on Acoustics
+  Speech and Signal Processing}, pages 65--8, 2010.
+
+\bibitem{serra2008chroma}
+Joan Serra, Emilia G{\'o}mez, Perfecto Herrera, and Xavier Serra.
+\newblock Chroma binary similarity and local alignment applied to cover song
+  identification.
+\newblock {\em IEEE Transactions on Audio, Speech, and Language Processing},
+  16(6):1138--51, 2008.
+
+\bibitem{wang2003industrial}
+Avery Li-Chun Wang.
+\newblock An industrial strength audio search algorithm.
+\newblock In {\em Proceedings of the 4th International Conference on Music
+  Information Retrieval}, pages 7--13, 2003.
+
+\end{thebibliography}

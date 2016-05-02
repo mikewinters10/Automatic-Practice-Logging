@@ -18,16 +18,16 @@
 
 % Title.
 % ------
-\title{A Dataset for Automatic Practice Logging}
+\title{A Dataset \& Approach for Automatic Practice Logging}
 
 % Note: Please do NOT use \thanks or a \footnote in any of the author markup
 
 % Single address
 % To use with only one author or several with the same address
 % ---------------
-%\oneauthor
-% {Names should be omitted for double-blind reviewing}
-% {Affiliations should be omitted for double-blind reviewing}
+\oneauthor
+{R. Michael Winters}
+{Georgia Tech Center for Music Technology\\Georgia Institute of Technology, Atlanta GA}
 
 % Two addresses
 % --------------
@@ -41,10 +41,10 @@
 
 % Three addresses
 % --------------
-\threeauthors
-  {First Author} {Affiliation1 \\ {\tt author1@ismir.edu}}
-  {Second Author} {\bf Retain these fake authors in\\\bf submission to preserve the formatting}
-  {Third Author} {Affiliation3 \\ {\tt author3@ismir.edu}}
+%\threeauthors
+%  {First Author} {Affiliation1 \\ {\tt author1@ismir.edu}}
+%  {Second Author} {\bf Retain these fake authors in\\\bf submission to preserve the formatting}
+%  {Third Author} {Affiliation3 \\ {\tt author3@ismir.edu}}
 
 %% To make customize author list in Creative Common license, uncomment and customize the next line
 %  \def\authorname{First Author, Second Author, Third Author} 
@@ -171,6 +171,7 @@ This difficulty is compounded by the fact that practice is highly fragmented in 
 
 \section{Related Work}
 
+\textit{This section was written by Siddharth Kumar and edited by R. Michael Winters}
 To the best knowledge of the authors, APL is an application space that has not yet been addressed. It does, however, draw important parallels with other application spaces in MIR, allowing similar frameworks to be used.  Perhaps its closest neighbor is the subject of cover song detection \cite{Ellis2007Cover,serra2008chroma,bertin2011large}, which in turn might derive methodologies from audio-to-audio or audio-to-score alignment and audio similarity \cite{hu2003polyphonic}.  Another possible area of interest is automatic transcription \cite{klapuri2004automatic}, and piano transcription \cite{raphael2002automatic} in particular for this case. In this section, techniques of cover song detection are described and compared with the unique requirements for an APL system. 
 
 %Automatic transcription, however, hasn't been explored in the baseline approach described in this paper since any comparison with a transcribed version of the practice audio would require the score. {\color{red}{Hmm. Now that I see this it might be better to remove transcription completely or only metnion it in passing...}}
@@ -314,6 +315,7 @@ As discussed in Section \ref{sec:Dataset}, we separate the APL task for repertoi
 %{\color{red}{but you cannot evaluate the second without any annotations anyway?}}
 
 \subsection{Overview}
+\label{sec:Overview}
 Although the task of automatically identifying practice audio is difficult, we present a preliminary algorithm that handles some of the major challenges of APL: pauses, fragmentation, and variable, unsteady tempi in the recorded audio.
 
 \begin{figure}
@@ -347,6 +349,7 @@ We select a group of 15 likely track candidates for each reference track by comp
 At the end of this step, we have a pool of 15 candidates across all window lengths across for each of the reference tracks, making 45 matches total.
 
 \subsection{Track Identification}
+\label{sec:DTW}
 For the last step, we step back to the original short-time pitch chroma sequence. This means that our query track and reference tracks are now represented as a matrix of dimension $12\times (2N-1)$, where $N=16$ for the query track and $N=\{8,10,12,14,16,18\}$ for the reference tracks.
 %
 The DTW cost is then computed for all 45 pairs of query matrix and reference matrices. For all pairs, the reference track with the texture window that has the lowest DTW cost relative to its path length and reference window size 
@@ -360,10 +363,33 @@ Figure~\ref{fig:140514-013}
 presents the results of running this algorithm on all of the non-zero frames of one track of practiced audio. The majority of the windows identify as the correct track.
 
 \begin{figure}
-\includegraphics[width=\linewidth]{figs/140514-033.eps}
+\includegraphics[width=\linewidth]{figs/minMatchingFrames.eps}
 \caption{A figure displaying the algorithms identification of reference tracks and cost (dis-similarity) for all non-zero windows of a 67s query track of repertoire practice.}
 \label{fig:140514-013}
 \end{figure}
+
+\subsection{Candidate Reduction}
+\label{sec:reduction}
+Before taking the DTW of all candidate windows, and choosing the one with the least weighted cost, there are a selection of 45 candidate locations---15 for each reference track. Before choosing the single best match for each query window, one can reduce the number of candidates using contextual information.  Specifically, a matching window $W_r$ in a reference track is more likely to be a correct match for a window in the query track $W_q$ if the following frame in the query track $W_{q+1}$ matches $W_r$ or $W_{r+1}$, and if the relative tempi are constant. Although this assumption will not hold for query frames followed by a large jump, pause, or with mistake, or decreasing tempo it can hold in many cases.
+
+Leveraging this knowledge a function was written that eliminates candidate frames that did not meet the following three conditions:
+\begin{itemize}
+\item $W_{r+1} >= W_r$
+\item $W_{r+1} <= W_r + 1$
+\item Window length($W_r$) == Window length($W_{r+1}$)
+\end{itemize}
+
+These conditions can be applied recursively, eliminating more and more frames. This recursive process is demonstrated in Figure \ref{fig:reduction}.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figs/Stepwise.jpg}
+\caption{A figure displaying the results of candidate reduction. The three plots represent candidates in each of the three reference tracks for every frame of the query track. By iteratively applying the filter described in \ref{sec:reduction}, more and more candidates can be eliminated.}
+\label{fig:reduction}
+\end{figure}
+
+
+
+
 
 \section{Results}
 \label{sec:Results}
