@@ -36,9 +36,10 @@ h = zeros(numRefTracks,1);
 % Create a times matrix
 timesMat = repmat(times, numResultsToReturn, 1);
 
-% Here we go!
+% Here we go! Full screen figure
 figure('units','normalized','outerposition',[0 0 1 1])
 
+hold on
 for i = 1:numRefTracks
     subplot(3,4,i)
     
@@ -61,9 +62,10 @@ for i = 1:numRefTracks
     zlabel('Frame Length')
     box on
 end
+hold off
 
-[ax, h3] = suplabel(['Candidates for ' qStruct.filename ', Filter Iteration: 1'] ,'t'); 
-set(h3, 'FontSize',14)
+[ax, q3] = suplabel(['Candidates for ' qStruct.filename] ,'t'); 
+set(q3, 'FontSize',14)
 
 %saveas(gcf, 'Figures/Step0.eps', 'epsc');
 % annotation('textbox', [0 0.9 1 0.1], ...
