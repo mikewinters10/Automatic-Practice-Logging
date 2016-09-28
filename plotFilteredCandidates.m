@@ -37,11 +37,10 @@ h = zeros(numRefTracks,1);
 timesMat = repmat(times, numResultsToReturn, 1);
 
 % Here we go!
-figure
+figure('units','normalized','outerposition',[0 0 1 1])
 
 for i = 1:numRefTracks
     subplot(3,4,i)
-    hold on
     
     % Get the indexes of the results that apply to this reference track
     indx = (i-1)*(numResultsToReturn)+1:i*numResultsToReturn;
@@ -52,18 +51,15 @@ for i = 1:numRefTracks
     % WThe filtered candidates have zeros that need to be disregarded
     nonZeroIndx = find(resultsForRefTrack);
     
-    % User feedback
-    ['Plotting reference track ' num2str(i) ' of ' num2str(numRefTracks)]
-    
     % Do a scatter plot
     scatter(timesMat(nonZeroIndx), resultsForRefTrack(nonZeroIndx))
    
+    % Formatting
     title(rFilenames{i})
     xlabel('Time(s)')
     ylabel('Match (s)')
     zlabel('Frame Length')
     box on
-    hold off
 end
 
 [ax, h3] = suplabel(['Candidates for ' qStruct.filename ', Filter Iteration: 1'] ,'t'); 
