@@ -1,4 +1,8 @@
 *.bin
+Figures/*
 
 APL_Dataset/14*
 .DS_Store
+*.m~
+*.mp3
+*.wav
