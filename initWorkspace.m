@@ -32,6 +32,6 @@ fs = 44100;
 removeSilence = true;
 
 % Create the feature matrix
-q = createFeatureMatrix(inputAudio, bigHopSize, bigWinSize, removeSilence);
+%q = createFeatureMatrix(inputAudio, bigHopSize, bigWinSize, removeSilence);
 
 r = saveRefFeatureMatrices(bigHopSize, bigWinSize, winSizesToSearch)

@@ -42,9 +42,10 @@ for i = 1:length(discont)
     hold on
 end
 
-xlabel('Time (s)')
-ylabel('Reference Match (s)')
-ylim([0 80])
+xlabel('Query Time (s)','fontweight','bold','fontsize',14)
+ylabel('Reference Time (s)','fontweight','bold','fontsize',14)
+%ylim([0 140])
+set(gca, 'FontSize', 16)
 box on
 
 %%%%%%% MARKERS %%%%%%%%%
@@ -53,6 +54,9 @@ mkrWidth = 1.6;
 % Make a handle for each reference track
 h = zeros(3,1);
 % 
+
+% Plot ground-truth (informal)
+%h(4) = plot([0 54.7], [0 58], 'LineWidth', 5,'LineStyle',':', 'Color', [0.6  0.6  0.6]);
 
 % Convert resultsMins to seconds:
 resultsMins = resultsMins * framesToSecondsFactor;
@@ -94,6 +98,8 @@ for i = 1:size(rFilenames,2)
      rFilenames{i} = [num2str(c(i)) ' ' rFilenames{i}];
 end
 
+% Add ground-truth annotation
+% rFilenames{1,4} = 'Ground Truth';
 a = legend(h, rFilenames);
 
 %%%%%%% TITLE %%%%%%%%%

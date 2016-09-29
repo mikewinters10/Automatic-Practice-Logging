@@ -14,6 +14,9 @@
 % ======================================================================
 function qStruct = findAllCandidates(qStruct, rStruct)
 
+% Verbose 
+verbose = 0;
+
 % Do an error check. They should have the same bigWinSize and bigHopSize;
 if qStruct.bigWinSize ~= rStruct.r1.bigWinSize
     error('BigWinSize is not the same between query and reference')
@@ -52,8 +55,10 @@ for i = 1:lenNZF
     candidates(:,:,i) = bestMatches;
     
     % Post the current frame
-    if mod(i,10)==0
-        [num2str(i) ' of ' num2str(lenNZF)] 
+    if verbose
+        if mod(i,10)==0
+            [num2str(i) ' of ' num2str(lenNZF)] 
+        end
     end
 end
 

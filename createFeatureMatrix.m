@@ -18,6 +18,9 @@ struct.bigWinSize   = bigWinSize;
 % Do pre-processing.
 inputAudio  = processInputAudio(inputAudio,fs);
 
+% Save duration in seconds:
+struct.duration = length(inputAudio)/fs;
+
 % To check for nonZeroFrames, we take longer chunks
 winSizeNZF  = bigWinSize * winSize;
 hopSizeNZF  = bigHopSize * winSize;
