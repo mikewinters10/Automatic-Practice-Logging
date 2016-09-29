@@ -363,33 +363,10 @@ Figure~\ref{fig:140514-013}
 presents the results of running this algorithm on all of the non-zero frames of one track of practiced audio. The majority of the windows identify as the correct track.
 
 \begin{figure}
-\includegraphics[width=\linewidth]{figs/minMatchingFrames.eps}
-\caption{A figure displaying the algorithms identification of reference tracks and cost (dis-similarity) for all non-zero windows of a 67s query track of repertoire practice.}
+\includegraphics[width=\linewidth]{figs/140514-033.eps}
+\caption{A figure displaying the algorithms identification of a matching frame for all non-zero windows of a 67s query track of repertoire practice.}
 \label{fig:140514-013}
 \end{figure}
-
-\subsection{Candidate Reduction}
-\label{sec:reduction}
-Before taking the DTW of all candidate windows, and choosing the one with the least weighted cost, there are a selection of 45 candidate locations---15 for each reference track. Before choosing the single best match for each query window, one can reduce the number of candidates using contextual information.  Specifically, a matching window $W_r$ in a reference track is more likely to be a correct match for a window in the query track $W_q$ if the following frame in the query track $W_{q+1}$ matches $W_r$ or $W_{r+1}$, and if the relative tempi are constant. Although this assumption will not hold for query frames followed by a large jump, pause, or with mistake, or decreasing tempo it can hold in many cases.
-
-Leveraging this knowledge a function was written that eliminates candidate frames that did not meet the following three conditions:
-\begin{itemize}
-\item $W_{r+1} >= W_r$
-\item $W_{r+1} <= W_r + 1$
-\item Window length($W_r$) == Window length($W_{r+1}$)
-\end{itemize}
-
-These conditions can be applied recursively, eliminating more and more frames. This recursive process is demonstrated in Figure \ref{fig:reduction}.
-
-\begin{figure}
-\includegraphics[width=\linewidth]{figs/Stepwise.jpg}
-\caption{A figure displaying the results of candidate reduction. The three plots represent candidates in each of the three reference tracks for every frame of the query track. By iteratively applying the filter described in \ref{sec:reduction}, more and more candidates can be eliminated.}
-\label{fig:reduction}
-\end{figure}
-
-
-
-
 
 \section{Results}
 \label{sec:Results}
@@ -414,6 +391,7 @@ To create a roughly even distribution of query windows across the three referenc
 \end{table}
 
 \section{Discussion}
+\label{sec:Discussion}
 
 The present results demonstrate that an APL system based upon the pitch chroma of short windows of practice audio can be used to identify the piece being practiced. The results target the broadest level of description, specifically the correct identification of the piece being practiced. However, further levels of detail are provided by this approach: namely a specific location in the reference track, the window size corresponding to the match, and the amount of dissimilarity (cost) for that combination. 
 %Annotating window by window for this size of query (i.e. 50,000 windows) is not practical, in instead one might annotate based upon sections and subsections of a given piece.
@@ -459,6 +437,63 @@ It is also necessary to acknowledge the importance of reference tracks in APL. I
 
 \section{Conclusion}
 This paper has presented current efforts towards Automatic Practice Logging (APL) including an annotated dataset, and a preliminary approach to identification.  Practice is a ubiquitous component of music, and despite challenges, there are many benefits to logging its content automatically. Practice occurs in many forms, and for the purpose of annotating it, we presented a typology and annotation framework that can be generalized to many instruments, musicians and types of practice.  We presented a proof of concept algorithm that that searches a reference library using pitch-chroma computed on very short segments, and using dynamic-time warping as an additional step to find the best match from a collection of candidates. Incorporating additional local assumptions such as score-continuity and constant tempo might lead to increased performance in the future, but one should be mindful that practice is globally fragmented and variable in tempo. Together, we hope that this work will encourage others to explore APL as an interesting and valuable topic for MIR.     
+
+
+\section{Developments Since ISMIR Submission}
+
+Since submitting to ISMIR, work has progressed in two directions, triggered by a reconsideration of the focus for evaluation. Whereas in the submitted paper, the algorithm was evaluated based upon how well it could correctly identify the reference track from short (1.5s) samples, it was determined that this method of evaluation was ultimately missing the point. How could we correctly identify what the performer practiced on longer time-scales than individual windows?
+
+For this question, it a new method for displaying the results was created that targeted the matching frame across the three reference tracks. Wheres Fig. \ref{fig:140514-013} displays the cost for the best match that was found, it does not display anything about the ``what" of practice. For this purpose it was necessary to begin to plot the matching reference window. An example plot for this is displayed in Fig. \ref{fig:noReduction}.
+
+\begin{figure}[ht!]
+\includegraphics[width=\linewidth]{figs/noReduction.eps}
+\caption{A figure displaying the algorithms identification of a matching frame for all non-zero windows of a 67s query track of repertoire practice. The correct identification answer is a linearly increasing straight line.}
+\label{fig:noReduction}
+\end{figure}
+
+Although not yet having annotations as to ``where" in the reference track the performer was performing, to begin work, a test track was chosen which presented a best-possible scenario (e.g. starting and ending without repetitions, pauses, and few mistakes). Using the algorithm described for the ISMIR paper, and plotting the matching reference window for each query window creates Fig. \label{fig:noReduction}. The figure displays sections where the reference track matches for adjacent windows are all ``correct," meaning that they are linearly increasing in time. However, many matches deviate significantly from this line, are identified as belonging to the wrong track, and are isolated (having no similar neighbors).
+
+From these observations it was reasoned that the algorithm might include two additional steps. In the first step, the algorithm could remove reference track matches for which there was not a subsequent match that was slightly ahead in time. This step could significantly reduce the number of matches for which a DTW would be applied, allowing an increase in the number of candidate matches for consideration. In the second step, interpolation could be used to choose reference matches whose cost was high, but nevertheless more likely to occur (i.e. being in the same piece, and similar in location to other matches). These steps are described in the following two sections.
+
+\subsection{Candidate Reduction}
+\label{sec:reduction}
+Before taking the DTW of all candidate windows, and choosing the one with the least weighted cost, there are a selection of 45 candidate locations---15 for each reference track. Before choosing the single best match for each query window, one can reduce the number of candidates using contextual information.  Specifically, a matching window $W_r$ in a reference track is more likely to be a correct match for a window in the query track $W_q$ if the following frame in the query track $W_{q+1}$ matches $W_r$, $W_{r} + 1$ or $W_{r} + 2$. Although this assumption will not hold for query frames followed by a large jump, pause, or with mistake, it can hold in most other cases and makes only small demands with respect to tempi.
+
+Leveraging this knowledge a function was written that eliminates candidate frames that did not meet the following three conditions:
+\begin{itemize}
+\item $W_{r+1} >= W_r$
+\item $W_{r+1} <= W_r + 2$
+\end{itemize}
+
+These conditions can be applied recursively, eliminating more and more frames with each application as is demonstrated in Figure \ref{fig:reduction}.  Leveraging this technique before applying the DTW eliminates candidates, meaning fewer DTWs need to be computed for each query window, which can lead to significant reductions in the runtime of the algorithm. Another benefit of the candidate reduction step is that by reducing runtime, more candidates might be considered. Whereas in the ISMIR submission 15 DTWs were computed for windows on each of the reference tracks, leading to a total of 45 DTWs per query window. 
+
+\begin{figure}[ht!]
+\includegraphics[width=\linewidth]{figs/Stepwise.jpg}
+\caption{A figure displaying the results of candidate reduction. The three plots represent candidates in each of the three reference tracks for every frame of the query track. By iteratively applying the filter described in \ref{sec:reduction}, more and more candidates can be eliminated.}
+\label{fig:reduction}
+\end{figure}
+
+
+Using candidate reduction, the algorithm now considers 60 windows per reference track, making a total of 180 possible matches for each query window. The candidate reduction step is applied five times, leaving only a few remaining candidates, whose costs are then computed using the DTW on the slightly lengthened texture window. With this step, the algorithm now performs faster and more intelligent searches.
+
+\subsection{Interpolation}
+
+Using the candidate reduction step helped to reduce the runtime of the algorithm by removing reference windows from search that were less likely However, it was found that even with candidate reduction, the least cost for all of the DTWs computed for a query window, might still choose the wrong piece, or choose a matching frame that was isolated or far away from its neighbors. Even worse, certain windows of the reference track might fail to meet the conditions of a five-fold application of the reduction method, meaning no matches could be for that window.  
+
+To fix this problem, an interpolation component was used to further leverage the context of each window. In the algorithm description, non-zero windows are windows that are determined to have useable content for search based upon the absolute magnitude amplitude envelope.  In practice, non-zero windows often occur in series, separated by breaks of silence. The basis of the interpolation function was to use a majority vote on series of adjacent non-zero windows to determine both the likely reference track, and the median window number. Using this information, non-zero windows that did not belong to the majority track identification or were far from the mean reference window number were forced to choose a candidate from the majority matching reference track, in a location that was close to the others in the series. Fig.\ref{fig:afterReduction} displays the result of this interpolation. It can be directly compared to Fig. \ref{fig:reduction}
+
+
+\begin{figure}[ht!]
+\includegraphics[width=\linewidth]{figs/afterReduction.eps}
+\caption{A figure displaying the algorithms identification of a matching frame for all non-zero windows of a 67s query track of repertoire practice. The correct identification answer is a linearly increasing straight line.}
+\label{fig:afterReduction}
+\end{figure}
+
+\subsection{Discussion \& Future Work}
+
+These two new developments have indicated means to leverage contextual information to perform more intelligent searches, and in order to choose matches that have higher cost but are more similar to their neighbors. Firstly, by reducing the candidates or ``best matches" to those that are followed by matches that are increasing with respect to time, eliminates many matches that were unlikely, and also makes the matches that are searched relatively more likely to be correct. Furthermore, while some individual query frames may be difficult to classify due to mistakes or pauses, if they are located in the vicinity of neighboring matches, and the lowest-cost match is not, the algorithm will choose the former despite its high cost. 
+
+The disadvantage of both approaches is that the assumptions implied may not always hold.  These new techniques have not yet been tested with the large dataset presented in the ISMIR publication, so it is not yet known how they would perform. A limiting factor is the annotation scheme. Namely although ``what" piece has been annotated ``where" in that piece has not been annotated, meaning there is no way to do a large-scale systematic evaluation on the ``where" problem. Yet, the ``where" problem may be the most important question for repertoire work going forward, so future work should begin a system of annotating where in each piece was practiced.   
 
 % For bibtex users:
 \bibliography{ISMIRtemplate}
