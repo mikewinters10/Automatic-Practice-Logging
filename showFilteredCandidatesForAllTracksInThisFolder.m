@@ -10,10 +10,12 @@ removePauses = true;
 
 matches = findMatchingTracksForMvtAndDate(movementNumber, folderName);
 
-numFilterIterations = 1;
+numFilterIterations = 2;
 costThreshold = 0.2;
 
 for i = 1:length(matches)
+    
+    disp(['Searching ' matches{i}])
     
     % Create the feature matrix for this query track
     q = createFeatureMatrix(matches{i}, bigHopSize, bigWinSize, removePauses);
@@ -26,4 +28,6 @@ for i = 1:length(matches)
     
     % Plot the results
     plotFilteredCandidates(q, rStruct);
+    
+    pause(2)
 end
