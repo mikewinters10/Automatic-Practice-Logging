@@ -7,5 +7,5 @@ APL_Dataset/14*
 *.mp3
 *.wav
 *.mat
-*.DS_Store
+*/.DS_Store
 referenceTracks/
