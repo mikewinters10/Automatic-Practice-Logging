@@ -70,11 +70,21 @@ for i = 1:numRefTracks
 end
 hold off
 
+% Get the annotation if available
+if isfield(qStruct.inputAudioStruct, 'section')
+    section = qStruct.inputAudioStruct.section;
+else
+    section = '';
+end;
+
 [ax, q3] = suplabel(['Candidates for ' qStruct.filename ....
     ', Cost Threshold = ' num2str(qStruct.costThreshold) ...
-    ', # Filter Iterations = ' num2str(qStruct.numFilterIterations)] ,'t'); 
+    ', # Filter Iterations = ' num2str(qStruct.numFilterIterations) ...
+    ' (Annotation = ' section ')'] ,'t'); 
 set(q3, 'FontSize',20)
 
+% Give a chance for the figure to update
+pause(1)
 %%%% Save the figure in the appropriate place
 
 [~, folderName, ~] = fileparts(qFilename); 

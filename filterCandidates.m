@@ -20,7 +20,7 @@ candidates = qStruct.allCandidates;
 numRefTracks = qStruct.numRefTracks;
 
 filteredCandidates = zeros(size(candidates));
-topNumberOfCosts = ceil(size(candidates,2) * costThreshold);
+numLowestCosts = ceil(size(candidates,2) * costThreshold);
 
 % Add filter parameteres to qStruct
 qStruct.costThreshold = costThreshold;
@@ -30,8 +30,8 @@ qStruct.numFilterIterations = numIterations;
 for i = 1:length(qStruct.nZF)
     
     % Find the indexes of elements that have costs below a threshold amount
-    [sortedCosts indices] = sort(candidates(3,:,i));
-    minIndices = indices(1:topNumberOfCosts);
+    [~, indices] = sort(candidates(3,:,i));
+    minIndices = indices(1:numLowestCosts);
    
     % Use these indexes to selectively choose results below the threshold
     filteredCandidates(:,minIndices,i) = candidates(:,minIndices,i);

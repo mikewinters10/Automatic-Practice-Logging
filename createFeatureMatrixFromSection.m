@@ -1,6 +1,6 @@
 function struct = createFeatureMatrixFromSection(inputAudioStruct, bigHopSize, bigWinSize, removeSilence)
 
-if nargin < 4
+if nargin < 4 && nargin == 3
     removeSilence = true;
 end
 

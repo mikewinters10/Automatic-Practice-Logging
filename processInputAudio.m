@@ -12,7 +12,7 @@
 %> @retval outputVector: A single channel Matlab vector.
 % ======================================================================
 % A function to remove long periods of silence from an input file.
-function outputVector = processInputAudio(inputAudio, fs)
+function outputVector = processInputAudio(inputAudio, fs, startSec, endSec)
 
 % If input audio is a filename, then read it.
 if ischar(inputAudio)
@@ -25,11 +25,24 @@ if size(inputAudio,2) == 2
     inputAudio = downMix(inputAudio);
 end
 
-% Remove last eight seconds (presumably silence because of recording
-% auto-stop)
-if length(inputAudio)<(fs*4)
-    'Audio file is too short for analysis'
-    return
+if nargin < 3
+    startSample = 1;
+    endSample = length(inputAudio);
+else
+    startSample = startSec * fs + 1;
+    endSample = (endSec * fs) + fs + 1;
+    if endSample > length(inputAudio)
+        endSample = length(inputAudio);
+    end
 end
+
+% Only use the desired portion
+inputAudio = inputAudio(startSample:endSample);
+
+% 
+% if length(inputAudio)<(fs*4)
+%     'Audio file is too short for analysis'
+%     return
+% end
 
 outputVector = inputAudio;

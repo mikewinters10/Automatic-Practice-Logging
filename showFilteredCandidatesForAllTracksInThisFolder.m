@@ -1,4 +1,4 @@
-function showFilteredCandidatesForAllTracksInThisFolder(folderName, rStruct)
+function showFilteredCandidatesForAllTracksInThisFolder(folderName, rStruct, thresh, num)
 
 % Default to movement 3 for now:
 movementNumber = 3;
@@ -10,8 +10,8 @@ removePauses = true;
 
 matches = findMatchingTracksForMvtAndDate(movementNumber, folderName);
 
-numFilterIterations = 2;
-costThreshold = 0.2;
+numFilterIterations = num;
+costThreshold = thresh;
 
 for i = 1:length(matches)
     

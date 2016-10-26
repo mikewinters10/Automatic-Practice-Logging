@@ -20,7 +20,8 @@ function refStruct = saveRefFeatureMatrices(bigHopSize, bigWinSize, winSizesToSe
 % bigHopSize = 4;
 
 % Reference tracks in the same movement:
-a = dir('referenceTracks/3rdMvt/*.wav');
+a = dir('referenceTracks/3rdMvt/ChiuMundi2001/*.mp3');
+%a = dir('referenceTracks/3rdMvt/Winters/*.wav');
 refTracks = {a(:).name};
 
 % Declare the reference tracks
@@ -77,4 +78,4 @@ refStruct.bigWinSize = bigWinSize;
 refStruct.bigHopSize = bigHopSize;
 refStruct.removePauses = removePauses;
 
-save('refStructFeatMat', 'refStruct')
+%save('refStructFeatMat', 'refStruct')
