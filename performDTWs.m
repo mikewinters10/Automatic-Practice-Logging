@@ -16,7 +16,7 @@ DTWs(1:2,:,:) = filteredCandidates(1:2,:,:);
 
 
 % For every non-zero frame in the query track
-for j = 1:size(qStruct.nZF);
+for j = 1:length(qStruct.nZF);
  
     % Retrieve the query frame, and the start/end block:
     queryFrame = qStruct.nZF(j);
@@ -26,6 +26,7 @@ for j = 1:size(qStruct.nZF);
     candidateFrames = qStruct.filteredCandidates(2,:,j);
     candidateWinSizes = qStruct.filteredCandidates(1,:,j);
     candidateIndx = find(candidateFrames);
+    
     
     % Perform the DTW for all of the candidate indexes
     for k = candidateIndx

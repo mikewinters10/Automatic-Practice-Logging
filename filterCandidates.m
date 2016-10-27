@@ -14,17 +14,24 @@
 %> @retval qStruct: The original qStruct with all of the candidates
 % ======================================================================
 
-function qStruct = filterCandidates(qStruct, numIterations, costThreshold)
+function qStruct = filterCandidates(qStruct, numIterations, costThreshold, secondPass)
 
-candidates = qStruct.allCandidates;
-numRefTracks = qStruct.numRefTracks;
+if nargin <= 3
+    secondPass = false;
+    candidates = qStruct.allCandidates;
+    
+    % Add filter parameteres to qStruct
+    qStruct.costThreshold = costThreshold;
+    qStruct.numFilterIterations = numIterations;
+    
+    numRefTracks = qStruct.numRefTracks;
+    filteredCandidates = zeros(size(candidates));
+    numLowestCosts = ceil(size(candidates,2) * costThreshold);
+end
 
-filteredCandidates = zeros(size(candidates));
-numLowestCosts = ceil(size(candidates,2) * costThreshold);
-
-% Add filter parameteres to qStruct
-qStruct.costThreshold = costThreshold;
-qStruct.numFilterIterations = numIterations;
+if secondPass
+    candidates = qStruct.filteredCandidates;
+end
 
 % In this step, threshold the costs to get rid of high costs
 for i = 1:length(qStruct.nZF)

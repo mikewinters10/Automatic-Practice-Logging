@@ -10,7 +10,11 @@
 % %>
 % 
 % % ======================================================================
-function plotFilteredCandidates(qStruct, rStruct)
+function plotFilteredCandidates(qStruct, rStruct, whichKind)
+
+if nargin <=2
+    whichKind = 'filtered';
+end
 
 % Initialization
 qFilename = qStruct.filename;
@@ -19,7 +23,14 @@ numMatchesToReturn = qStruct.numMatchesToReturn;
 numRefTracks = qStruct.numRefTracks;
 
 % Choose the candidates for plotting
-results = qStruct.filteredCandidates;
+switch whichKind 
+    case 'filtered'
+        results = qStruct.filteredCandidates;
+    case 'DTWs'
+        results = qStruct.DTWs;
+    case 'raw'
+        results = qStruct.allCandidates;
+end
 
 % Convert non-zero frames to seconds;
 sampleRate = 44100; % Shoot! Not global yet.
@@ -81,14 +92,13 @@ for i = 1:numRefTracks
     refTrackLen = eval(['rStruct.r' num2str(i) '.duration']);
     ylim([0 refTrackLen])
     box on
-    
         % Create a rectangle around zero-frames:
     yLims = ylim;
     % Grey: 'FaceColor',[0.9 0.9 0.9], 
     for j = qStruct.zF
         xPos = j * framesToSecondsFactor;
         rectangle('Position', [xPos 0 framesToSecondsFactor yLims(2)],...
-            'LineStyle', ':')
+            'FaceColor',[0.9 0.9 0.9],'EdgeColor','none')
     end
 end
 hold off
@@ -112,14 +122,17 @@ pause(1)
 
 [~, folderName, ~] = fileparts(qFilename); 
 
-folderPath = ['Figures/' folderName];
+timestamp = char(datetime('now','Format','HHmmss'));
+today = char(datetime('now','Format','yyyy-MM-dd'));
+
+folderPath = ['Figures/' today];
 
 if ~exist(folderPath)
     mkdir(folderPath);
 end
-timestamp = char(datetime('now','Format','yyyy-MM-dd''T''HHmmss'));
 
-hgexport(gcf, [folderPath '/' timestamp '.png'],  hgexport('factorystyle'), 'Format', 'png');
+% hgexport(gcf, [folderPath '/' whichKind '_' timestamp '.png'],  hgexport('factorystyle'), 'Format', 'png');
+hgexport(gcf, ['Figures/' today '/' folderName '_' whichKind '_' timestamp '.png'],  hgexport('factorystyle'), 'Format', 'png');
 end
 
 % Figure out color scaling factor:
