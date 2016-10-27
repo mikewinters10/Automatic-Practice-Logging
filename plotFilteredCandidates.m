@@ -15,7 +15,7 @@ function plotFilteredCandidates(qStruct, rStruct)
 % Initialization
 qFilename = qStruct.filename;
 rFilenames = rStruct.filenames;
-numResultsToReturn = qStruct.numMatchesToReturn;
+numMatchesToReturn = qStruct.numMatchesToReturn;
 numRefTracks = qStruct.numRefTracks;
 
 % Choose the candidates for plotting
@@ -34,7 +34,7 @@ times = (qStruct.nZF-1)*framesToSecondsFactor;
 h = zeros(numRefTracks,1);
 
 % Create a times matrix
-timesMat = repmat(times, numResultsToReturn, 1);
+timesMat = repmat(times, numMatchesToReturn, 1);
 
 % Here we go! Full screen figure
 figure('units','normalized','outerposition',[0 0 1 1])
@@ -57,7 +57,7 @@ for i = 1:numRefTracks
     subplot(3,4,i)
     
     % Get the indexes of the results that apply to this reference track
-    indx = (i-1)*(numResultsToReturn)+1:i*numResultsToReturn;
+    indx = (i-1)*(numMatchesToReturn)+1:i*numMatchesToReturn;
     
     % Get the frame numbers for this reference track
     resultsForRefTrack  = squeeze(results(2,indx,:));

@@ -13,6 +13,8 @@ for i = 1:length(matches);
     % Filter these candidates to only include those with lowest costs
     q = filterCandidates(q, numFilterIterations, topPercentageOfCandidates);
     % Perform DTWs
+    q = performDTWs(q, r);
+    % Plot the results
     plotFilteredCandidates(q, r)
 end
 
