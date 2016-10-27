@@ -40,6 +40,18 @@ timesMat = repmat(times, numResultsToReturn, 1);
 figure('units','normalized','outerposition',[0 0 1 1])
 set(gca,'fontsize',16)
 
+% To color our scatter plot according to cost, you need to figure out max
+% and min costs;
+costs = squeeze(results(3,:,:));
+maxCost = max(max(costs));
+% Currently "zeros" are placeholders, and need to be disregarded when
+% computing the min
+costs(costs <= 0) = inf; 
+minCost= min(min(costs));
+
+% Convert the current colormap
+% colormap jet
+
 hold on
 for i = 1:numRefTracks
     subplot(3,4,i)
@@ -48,14 +60,16 @@ for i = 1:numRefTracks
     indx = (i-1)*(numResultsToReturn)+1:i*numResultsToReturn;
     
     % Get the frame numbers for this reference track
-    resultsForRefTrack = squeeze(results(2,indx,:));
+    resultsForRefTrack  = squeeze(results(2,indx,:));
+    costsForRefTrack    = squeeze(results(3,indx,:));
     
     % WThe filtered candidates have zeros that need to be disregarded
     nonZeroIndx = find(resultsForRefTrack);
     
     % Do a scatter plot
     scatter(timesMat(nonZeroIndx), ...
-        ( resultsForRefTrack(nonZeroIndx) -1 ) * framesToSecondsFactor)
+        ( resultsForRefTrack(nonZeroIndx) -1 ) * framesToSecondsFactor, [], ...
+        convertCostsToColors(costsForRefTrack(nonZeroIndx), minCost, maxCost))
    
     % Formatting
     title(rFilenames{i}) 
@@ -67,6 +81,15 @@ for i = 1:numRefTracks
     refTrackLen = eval(['rStruct.r' num2str(i) '.duration']);
     ylim([0 refTrackLen])
     box on
+    
+        % Create a rectangle around zero-frames:
+    yLims = ylim;
+    % Grey: 'FaceColor',[0.9 0.9 0.9], 
+    for j = qStruct.zF
+        xPos = j * framesToSecondsFactor;
+        rectangle('Position', [xPos 0 framesToSecondsFactor yLims(2)],...
+            'LineStyle', ':')
+    end
 end
 hold off
 
@@ -97,3 +120,10 @@ end
 timestamp = char(datetime('now','Format','yyyy-MM-dd''T''HHmmss'));
 
 hgexport(gcf, [folderPath '/' timestamp '.png'],  hgexport('factorystyle'), 'Format', 'png');
+end
+
+% Figure out color scaling factor:
+function colorValues = convertCostsToColors(costs, minCost, maxCost)
+   % Scale the range to 1 to 10
+    colorValues = (((costs - minCost) / maxCost) * 19) + 1;
+end
