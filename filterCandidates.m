@@ -33,7 +33,7 @@ if secondPass
     candidates = qStruct.filteredCandidates;
 end
 
-% In this step, threshold the costs to get rid of high costs
+%In this step, threshold the costs to get rid of high costs
 for i = 1:length(qStruct.nZF)
     
     % Find the indexes of elements that have costs below a threshold amount

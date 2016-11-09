@@ -19,17 +19,20 @@ for l = 1:numRefTracks
     % For each nonzeroFrame
     for i = 1:size(results,3)-2
         for j = 1:size(results,2)
-            candidateFrame      = results(2,j,i);
+            candidateFrame      = results(:,j,i);
             for k = 1:size(results,2)
-                futureFrame     = results(2,k,i+1); 
+                futureFrame     = results(:,k,i+1); 
               
                 % Only include it if certain conditions are met:
-                if futureFrame > candidateFrame && futureFrame <= candidateFrame + 2 %&& results(1,j,i) == results(1,k,i+1)
+                if futureFrame(2) > candidateFrame(2) && futureFrame(2) <= candidateFrame(2) + 2 && abs(futureFrame(1)-candidateFrame(1)) <= 4
                     stepwiseIncreasingResults(:,(l-1)*numMatchesToReturn+j,i) = results(:,j,i);
-                    stepwiseIncreasingResults(:,(l-1)*numMatchesToReturn+k,i+1) = results(:,k,i+1);
+                    
+                    % I can't figure out right now how to do this properly.
+                    % Currently this does not allow for several filter
+                    % iterations
+                    %stepwiseIncreasingResults(:,(l-1)*numMatchesToReturn+k,i+1) = results(:,k,i+1);
                 end
             end
         end
     end
 end
-        
