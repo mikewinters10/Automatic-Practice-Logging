@@ -8,30 +8,21 @@
 %> @retval
 % ======================================================================
 
-inputAudio = '140521-032.mp3';
+% Add code to path
+addpath(genpath('code'))
+rmpath(genpath('code/DistanceMats'))
+addpath(genpath('referenceTracks'))
+addpath(genpath('APL_Dataset'))
 
-%inputAudio = '1-140507-038.mp3'
-% 
-%winSizesToSearch = [16, 20, 22, 24, 26, 28];
+% Set global variables
 winSizesToSearch = [8, 10, 12, 14, 16, 18];
-%winSizesToSearch = [6, 8, 10, 11, 12, 13];
-% winSizesToSearch = [6, 8, 10, 12, 14, 16];
 bigWinSize = 16; % * winSize
 bigHopSize = 4; % * winSize
 fs = 44100;
-
-%q = createFeatureMatrix(inputAudio);
-
-% Create a series of versions biased towards slower versions than the reference (32).
-% winSizesToSearch = [16, 20, 24, 28, 32, 36];
-% bigWinSize = 32;
-% bigHopSize = 4;
 
 % For query audio, we try to remove any bigWinSize windows with signifcant
 % pauses
 removeSilence = true;
 
 % Create the feature matrix
-%q = createFeatureMatrix(inputAudio, bigHopSize, bigWinSize, removeSilence);
-
-r = saveRefFeatureMatrices(bigHopSize, bigWinSize, winSizesToSearch)
+r = saveRefFeatureMatrices(bigHopSize, bigWinSize, winSizesToSearch);
