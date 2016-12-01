@@ -20,7 +20,12 @@ startIndx   = find(qStruct.nZF == snipetStartIndx);
 endIndx     = find(qStruct.nZF == snipetEndIndx);
 
 % Retrieve the candidate costs
-candidateCosts = squeeze(qStruct.filteredCandidates(3,:,startIndx:endIndx));
+if startIndx ~= endIndx
+    candidateCosts = squeeze(qStruct.filteredCandidates(3,:,startIndx:endIndx));
+else
+    % If length is 1, need different strategy to be uniform
+    candidateCosts = qStruct.filteredCandidates(3,:,startIndx)';
+end
 
 % Retrieve possible matches
 numRefTracks        = qStruct.numRefTracks;
@@ -32,6 +37,7 @@ numMatchesPerNZF = zeros(numRefTracks, numNZF);
 
 for i = 1:numNZF
     for j = 1:numRefTracks
+
         % Get the correct indexes for each reference track
         candidateIdx = (j-1)*numMatchesToReturn + 1: j*numMatchesToReturn;
         
